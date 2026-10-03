@@ -1,0 +1,8 @@
+{
+  "name": "medroute-demo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Synthetic medical referral coordination demo",
+  "scripts": { "start": "node server.mjs", "check": "node check.mjs" },
+  "engines": { "node": ">=18" }
+}

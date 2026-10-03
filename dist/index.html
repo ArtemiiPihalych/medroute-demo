@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102c36">
+  <meta name="description" content="МедМаршрут — демонстрация координации плановых госпитализаций в Челябинской области. Только вымышленные данные.">
+  <title>МедМаршрут · Плановая госпитализация</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+  <aside class="sidebar">
+    <a class="brand" href="#patients" aria-label="МедМаршрут — пациенты"><span class="brand-symbol">м</span><span>МедМаршрут<small>ПЛАНОВАЯ ПОМОЩЬ</small></span></a>
+    <div class="workspace-label">РАБОЧЕЕ ПРОСТРАНСТВО</div>
+    <nav aria-label="Основная навигация">
+      <a href="#patients" data-view="patients" class="nav-item active"><span class="nav-icon">▤</span>Пациенты<span class="nav-count" id="nav-count">12</span></a>
+      <a href="#clinics" data-view="clinics" class="nav-item"><span class="nav-icon">⊞</span>Возможности клиник</a>
+      <a href="#journeys" data-view="journeys" class="nav-item"><span class="nav-icon">◷</span>Госпитализации</a>
+    </nav>
+    <div class="sidebar-note"><span class="region-dot"></span><strong>Челябинская область</strong><p>Один регион.<br>Больше возможностей помочь.</p></div>
+    <div class="sidebar-bottom"><a class="nav-item" href="#about" data-view="about"><span class="nav-icon">ⓘ</span>Как работает демо</a><div class="user"><span class="avatar">ДК</span><div><strong>Демо-координатор</strong><small>Тестовое рабочее место</small></div></div></div>
+  </aside>
+  <div class="shell">
+    <header class="topbar"><div><span class="breadcrumb">Координация помощи</span><span class="divider">/</span><span id="crumb">Пациенты</span></div><span class="demo-tag">ДЕМОВЕРСИЯ</span></header>
+    <div class="demo-banner"><span class="demo-icon">◈</span><span><strong>Все данные вымышлены.</strong> Не вводите сведения реальных пациентов. Изменения сбрасываются при обновлении страницы.</span></div>
+    <main id="main" tabindex="-1">
+      <section class="page-heading"><div><p class="eyebrow">ПЛАНОВАЯ ГОСПИТАЛИЗАЦИЯ</p><h1 id="page-title">Пациенты</h1><p class="page-description" id="page-description">Помогаем найти подходящий стационар и согласовать лечение.</p></div><button class="button primary" id="add-patient"><span aria-hidden="true">＋</span>Создать пробную заявку</button></section>
+      <div id="content"><div class="stats"><div class="stat"><span>Всего заявок</span><strong>12</strong><small>В демонстрационном реестре</small></div><div class="stat"><span>Ожидают предложения</span><strong>7</strong><small>Можно подобрать стационар</small></div><div class="stat"><span>На согласовании</span><strong>3</strong><small>Пациент выбирает вариант</small></div><div class="stat accent"><span>Госпитализация подтверждена</span><strong>2</strong><small>Дата и условия согласованы</small></div></div><div class="panel loading-panel">Загружаем демонстрационные заявки…</div></div>
+      <footer><span>МедМаршрут <span class="footer-dot">·</span> Прототип для обсуждения с врачами <a class="footer-help" href="#about">О демоверсии</a></span><button id="reset" class="text-button">Начать демо заново</button></footer>
+    </main>
+  </div>
+  <dialog id="detail-dialog" class="detail-dialog" aria-labelledby="detail-title"><div id="detail-content"></div></dialog>
+  <dialog id="form-dialog" class="form-dialog" aria-labelledby="form-title"><form id="patient-form"><div class="dialog-header"><div><p class="eyebrow">ТОЛЬКО ВЫМЫШЛЕННЫЕ ДАННЫЕ</p><h2 id="form-title">Пробная заявка</h2></div><button type="button" class="icon-button" data-close="form-dialog" aria-label="Закрыть">×</button></div><p class="muted">Сервис автоматически присвоит пациенту демонстрационный номер. ФИО, контакты и документы не запрашиваются.</p><div class="form-grid"><label>Возраст<input name="age" type="number" min="18" max="100" value="54" required></label><label>Город<select name="city"><option>Челябинск</option><option>Магнитогорск</option><option>Златоуст</option><option>Миасс</option><option>Копейск</option><option>Сатка</option></select></label><label class="span-2">Вмешательство<select name="procedure" id="procedure-select"></select></label><label>Варианты оплаты<select name="payment"><option value="oms">Только ОМС</option><option value="both">ОМС и платно</option><option value="paid">Только платно</option></select></label><label>Обследования<select name="ready"><option value="true">Собраны</option><option value="false">Требуется дообследование</option></select></label></div><label class="checkbox-label"><input type="checkbox" name="travel" checked>Готов рассмотреть другой город области</label><div class="form-notice">Это учебный сценарий: заявка остаётся в этой вкладке и никуда не отправляется.</div><div class="dialog-actions"><button type="button" class="button secondary" data-close="form-dialog">Отмена</button><button type="submit" class="button primary">Создать заявку</button></div></form></dialog>
+  <dialog id="reset-dialog" class="small-dialog" aria-labelledby="reset-title"><h2 id="reset-title">Начать заново?</h2><p>Созданные в этой вкладке заявки и изменения статусов будут заменены исходными примерами.</p><div class="dialog-actions"><button class="button secondary" data-close="reset-dialog">Отмена</button><button class="button primary" id="confirm-reset">Сбросить демо</button></div></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
