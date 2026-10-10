@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#102c36">
-  <meta name="description" content="МедМаршрут — демонстрация координации плановых госпитализаций в Челябинской области. Только вымышленные данные.">
-  <title>МедМаршрут · Плановая госпитализация</title>
+  <meta name="description" content="Антон — демонстрация координации плановых госпитализаций в Челябинской области. Только вымышленные данные.">
+  <title>Антон · Плановая госпитализация</title>
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
   <link rel="stylesheet" href="./style.css">
   <script src="./app.js" defer></script>
@@ -13,23 +13,24 @@
 <body>
   <a class="skip-link" href="#main">Перейти к содержимому</a>
   <aside class="sidebar">
-    <a class="brand" href="#patients" aria-label="МедМаршрут — пациенты"><span class="brand-symbol">м</span><span>МедМаршрут<small>ПЛАНОВАЯ ПОМОЩЬ</small></span></a>
+    <a class="brand" href="#patients" aria-label="Антон — плановая помощь"><span class="brand-symbol">а</span><span>Антон<small>ПЛАНОВАЯ ПОМОЩЬ</small></span></a>
     <div class="workspace-label">РАБОЧЕЕ ПРОСТРАНСТВО</div>
     <nav aria-label="Основная навигация">
-      <a href="#patients" data-view="patients" class="nav-item active"><span class="nav-icon">▤</span>Пациенты<span class="nav-count" id="nav-count">12</span></a>
+      <a href="#patients" data-view="patients" class="nav-item active"><span class="nav-icon">▤</span><span id="patients-nav-label">Пациенты</span><span class="nav-count" id="nav-count">12</span></a>
       <a href="#clinics" data-view="clinics" class="nav-item"><span class="nav-icon">⊞</span>Возможности клиник</a>
       <a href="#journeys" data-view="journeys" class="nav-item"><span class="nav-icon">◷</span>Госпитализации</a>
+      <a href="#track" data-view="track" class="nav-item"><span class="nav-icon">◷</span>Отслеживание заявки</a>
     </nav>
     <div class="sidebar-note"><span class="region-dot"></span><strong>Челябинская область</strong><p>Один регион.<br>Больше возможностей помочь.</p></div>
-    <div class="sidebar-bottom"><a class="nav-item" href="#about" data-view="about"><span class="nav-icon">ⓘ</span>Как работает демо</a><div class="user"><span class="avatar">ДК</span><div><strong>Демо-координатор</strong><small>Тестовое рабочее место</small></div></div></div>
+    <div class="sidebar-bottom"><a class="nav-item" href="#about" data-view="about"><span class="nav-icon">ⓘ</span>Как работает демо</a><div class="user"><span class="avatar">А</span><div><strong>Врач стационара</strong><small>Демонстрационная роль</small></div></div></div>
   </aside>
   <div class="shell">
-    <header class="topbar"><div><span class="breadcrumb">Координация помощи</span><span class="divider">/</span><span id="crumb">Пациенты</span></div><span class="demo-tag">ДЕМОВЕРСИЯ</span></header>
+    <header class="topbar"><div><span class="breadcrumb">Координация помощи</span><span class="divider">/</span><span id="crumb">Пациенты</span></div><div class="topbar-tools"><label class="role-picker">Роль в демо<select id="role-switch" aria-label="Переключить демонстрационную роль"><option value="inpatient">Врач стационара</option><option value="outpatient">Врач амбулатории</option><option value="patient">Пациент</option><option value="admin">Администратор</option></select></label><span class="demo-tag">ДЕМОВЕРСИЯ</span></div></header>
     <div class="demo-banner"><span class="demo-icon">◈</span><span><strong>Все данные вымышлены.</strong> Не вводите сведения реальных пациентов. Изменения сбрасываются при обновлении страницы.</span></div>
     <main id="main" tabindex="-1">
       <section class="page-heading"><div><p class="eyebrow">ПЛАНОВАЯ ГОСПИТАЛИЗАЦИЯ</p><h1 id="page-title">Пациенты</h1><p class="page-description" id="page-description">Помогаем найти подходящий стационар и согласовать лечение.</p></div><button class="button primary" id="add-patient"><span aria-hidden="true">＋</span>Создать пробную заявку</button></section>
       <div id="content"><div class="stats"><div class="stat"><span>Всего заявок</span><strong>12</strong><small>В демонстрационном реестре</small></div><div class="stat"><span>Ожидают предложения</span><strong>7</strong><small>Можно подобрать стационар</small></div><div class="stat"><span>На согласовании</span><strong>3</strong><small>Пациент выбирает вариант</small></div><div class="stat accent"><span>Госпитализация подтверждена</span><strong>2</strong><small>Дата и условия согласованы</small></div></div><div class="panel loading-panel">Загружаем демонстрационные заявки…</div></div>
-      <footer><span>МедМаршрут <span class="footer-dot">·</span> Прототип для обсуждения с врачами <a class="footer-help" href="#about">О демоверсии</a></span><button id="reset" class="text-button">Начать демо заново</button></footer>
+      <footer><span>Антон <span class="footer-dot">·</span> Прототип для обсуждения с врачами <a class="footer-help" href="#about">О демоверсии</a></span><button id="reset" class="text-button">Начать демо заново</button></footer>
     </main>
   </div>
   <dialog id="detail-dialog" class="detail-dialog" aria-labelledby="detail-title"><div id="detail-content"></div></dialog>
