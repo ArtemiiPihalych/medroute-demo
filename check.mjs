@@ -15,7 +15,7 @@ const checklist = readFileSync(path.join(root, 'UC_CHECKLIST.md'), 'utf8');
 for (const match of html.matchAll(/(?:src|href)="\.\/([^"#]+)"/g)) {
   if (!existsSync(path.join(root, 'dist', match[1]))) throw new Error(`Missing asset ${match[1]}`);
 }
-for (const marker of ['lang="ru"', 'id="login-form"', 'id="patient-login-form"', 'id="logout-user"', 'id="detail-dialog"', 'id="detail-content"', 'id="attachments-input"', 'type="file"', 'name="inPersonRequired"', 'value="draft"', 'value="publish"', 'data-view="users"']) {
+for (const marker of ['lang="ru"', 'id="login-form"', 'id="patient-login-form"', 'id="logout-user"', 'id="detail-dialog"', 'id="detail-content"', 'id="attachments-input"', 'id="attachment-feedback"', 'id="attachment-preview-dialog"', 'type="file"', 'name="inPersonRequired"', 'value="draft"', 'value="publish"', 'data-view="users"']) {
   if (!html.includes(marker)) throw new Error(`Missing interface element: ${marker}`);
 }
 if (html.includes('Это имитация входа для проверки Use Case, не защита данных.')) throw new Error('Obsolete login disclaimer is still shown');
@@ -32,6 +32,9 @@ for (const feature of ['function renderUsers', 'function ownsReferral', 'functio
 }
 if (!db.includes('indexedDB.open') || !db.includes('saveSnapshot')) throw new Error('IndexedDB persistence is missing');
 if (!app.includes("document.getElementById('logout-user').addEventListener('click'")) throw new Error('Logout action is missing');
+for (const feature of ['function attachmentItemsHTML', 'function openAttachmentPreview', 'URL.createObjectURL(blob)', 'data-preview-attachment', 'class="attachment-pdf"', 'class="attachment-image"']) {
+  if (!app.includes(feature)) throw new Error(`Missing attachment display or preview workflow: ${feature}`);
+}
 if (!app.includes("if(b.dataset.open){openPatient(b.dataset.open);return;}")) throw new Error('Referral row action is not wired to its detail dialog');
 if (!app.includes("validName=/^(ДЕМО-|DEMO-)/i.test(name)")) throw new Error('Synthetic attachment filename guard is missing');
 if ((operationCatalog.match(/^\s+"/gm) || []).length !== 67) throw new Error('Expected all 67 operation names from the supplied HTML');

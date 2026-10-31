@@ -59,3 +59,15 @@
 .attachment-list li{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 10px;background:#f5f9f9;border:1px solid var(--line);border-radius:8px;font-size:12px;overflow-wrap:anywhere}
 .attachment-list .no-files{justify-content:flex-start;color:var(--muted);background:transparent;border-style:dashed}
 .remove-file{flex:0 0 auto;border:0;background:transparent;color:var(--teal);font:inherit;font-size:11px;text-decoration:underline}
+.attachment-list .attachment-open,.detail-attachments .attachment-open{display:flex;align-items:center;justify-content:space-between;gap:12px;flex:1;min-width:0;border:0;padding:0;background:transparent;color:var(--navy);font:inherit;text-align:left;overflow-wrap:anywhere}
+.attachment-open span{flex:0 0 auto;color:var(--teal);font-size:11px;text-decoration:underline}
+.attachment-feedback{margin:6px 0 0;color:var(--muted);font-size:11px;line-height:1.45}
+.detail-attachments{display:grid;gap:7px;padding:0;margin:0;list-style:none}
+.detail-attachments li{border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.attachment-preview-dialog{width:min(1040px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto;padding:24px;background:white;border:0;border-radius:16px;box-shadow:0 24px 80px #102c3640}
+.attachment-preview-dialog::backdrop{background:#102c3680}
+.attachment-preview-content{min-height:160px;display:grid;place-items:center;margin-top:16px;background:#f4f7f8;border-radius:10px;overflow:hidden}
+.attachment-pdf{width:100%;height:min(72vh,820px);border:0;background:white}
+.attachment-image{display:block;max-width:100%;max-height:72vh;object-fit:contain}
+.preview-unavailable{padding:28px;color:var(--muted);font-size:14px;line-height:1.6;text-align:center}
+@media(max-width:650px){.attachment-preview-dialog{padding:18px 14px}.attachment-pdf{height:70vh}.attachment-list li{align-items:flex-start}}
