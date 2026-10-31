@@ -35,7 +35,7 @@ CREATE TABLE demo_referrals (
   diagnosis text NOT NULL CHECK (diagnosis LIKE 'ДЕМО-%'),
   icd_code text NOT NULL CHECK (icd_code LIKE 'ДЕМО-%'),
   procedure_text text NOT NULL CHECK (procedure_text LIKE 'ДЕМО-%'),
-  procedure_code text NOT NULL CHECK (procedure_code LIKE 'ДЕМО-%'),
+  procedure_code text NOT NULL CHECK (length(procedure_code) > 0),
   comment text NOT NULL DEFAULT 'ДЕМО-не указан' CHECK (comment LIKE 'ДЕМО-%'),
   status text NOT NULL CHECK (status IN ('draft','waiting','clarification','review','confirmed','admitted','documents','no_show','completed','cancelled','archived')),
   payment text NOT NULL CHECK (payment IN ('oms','paid','both')),
@@ -69,8 +69,9 @@ CREATE TABLE demo_offers (
 CREATE TABLE demo_attachments (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   referral_id uuid NOT NULL REFERENCES demo_referrals(id),
-  sample_key text NOT NULL CHECK (sample_key IN ('sample-labs','sample-ultrasound','sample-ecg')),
-  display_name text NOT NULL CHECK (display_name LIKE 'ДЕМО-%'),
+  display_name text NOT NULL CHECK (display_name LIKE 'ДЕМО-%' OR display_name LIKE 'DEMO-%'),
+  mime_type text NOT NULL CHECK (mime_type IN ('application/pdf','image/jpeg','image/png')),
+  size_bytes bigint NOT NULL CHECK (size_bytes BETWEEN 1 AND 5242880),
   created_at timestamptz NOT NULL DEFAULT now()
 );
 
