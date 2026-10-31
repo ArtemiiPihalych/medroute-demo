@@ -32,7 +32,7 @@ if (!app.includes("if(b.dataset.open){openPatient(b.dataset.open);return;}")) th
 if (!app.includes("validName=/^(ДЕМО-|DEMO-)/i.test(name)")) throw new Error('Synthetic attachment filename guard is missing');
 if ((operationCatalog.match(/^\s+"/gm) || []).length !== 67) throw new Error('Expected all 67 operation names from the supplied HTML');
 const css = readFileSync(path.join(root, 'dist/style.css'), 'utf8');
-for (const rule of ['.login-dialog label{display:grid', '.form-dialog:not(.login-dialog){width:min(1120px', '.form-dialog:not(.login-dialog) .form-grid{grid-template-columns:repeat(4', '.brand-symbol svg', '.attachment-list']) {
+for (const rule of ['.login-dialog label{display:grid', '.form-dialog:not(.login-dialog){width:min(1120px', '.form-dialog:not(.login-dialog) .form-grid{grid-template-columns:repeat(4', '.form-dialog:not(.login-dialog) .checkbox-label input[type=checkbox]{flex:0 0 18px;width:18px', '.brand-symbol svg', '.attachment-list']) {
   if (!css.includes(rule)) throw new Error(`Missing popup layout fix: ${rule}`);
 }
 if (!existsSync(path.join(root, 'database/pilot-schema.sql'))) throw new Error('Missing PostgreSQL pilot schema');
