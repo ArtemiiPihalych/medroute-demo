@@ -19,6 +19,10 @@ for (const marker of ['lang="ru"', 'id="login-form"', 'id="patient-login-form"',
   if (!html.includes(marker)) throw new Error(`Missing interface element: ${marker}`);
 }
 if (html.includes('Это имитация входа для проверки Use Case, не защита данных.')) throw new Error('Obsolete login disclaimer is still shown');
+for (const obsolete of ['МАРШРУТ ПОМОЩИ', 'field-help', 'demo-tag', 'switch-user', 'Сменить аккаунт']) {
+  if (html.includes(obsolete) || app.includes(obsolete)) throw new Error(`Obsolete interface element remains: ${obsolete}`);
+}
+if (!app.includes('<h2>Только тестовые данные</h2>')) throw new Error('Test-data heading was not updated');
 if (!html.includes('class="brand-symbol" aria-hidden="true"><svg')) throw new Error('New vector brand mark is missing');
 for (const useCase of ['UC-ADM-01', 'UC-AMB-01', 'UC-AMB-02', 'UC-HOSP-01', 'UC-HOSP-02', 'UC-PAT-01']) {
   if (!checklist.includes(useCase)) throw new Error(`Missing Use Case review: ${useCase}`);
