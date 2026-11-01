@@ -18,6 +18,10 @@ for (const match of html.matchAll(/(?:src|href)="\.\/([^"#]+)"/g)) {
 for (const marker of ['lang="ru"', 'id="login-form"', 'id="patient-login-form"', 'id="logout-user"', 'id="detail-dialog"', 'id="detail-content"', 'id="attachments-input"', 'id="attachment-feedback"', 'id="attachment-preview-dialog"', 'type="file"', 'name="inPersonRequired"', 'value="draft"', 'value="publish"', 'data-view="users"']) {
   if (!html.includes(marker)) throw new Error(`Missing interface element: ${marker}`);
 }
+if (html.includes('data-view="clinics"') || app.includes('renderClinics')) throw new Error('Clinic-capacity navigation tab should be removed');
+for (const marker of ['id="calendar-day-dialog"', 'id="calendar-settings-dialog"', 'name="greenMax"', 'name="orangeMax"']) {
+  if (!html.includes(marker)) throw new Error(`Missing calendar control: ${marker}`);
+}
 if (html.includes('Это имитация входа для проверки Use Case, не защита данных.')) throw new Error('Obsolete login disclaimer is still shown');
 for (const obsolete of ['МАРШРУТ ПОМОЩИ', 'field-help', 'demo-tag', 'switch-user', 'Сменить аккаунт']) {
   if (html.includes(obsolete) || app.includes(obsolete)) throw new Error(`Obsolete interface element remains: ${obsolete}`);
@@ -35,14 +39,18 @@ if (!app.includes("document.getElementById('logout-user').addEventListener('clic
 for (const feature of ['function attachmentItemsHTML', 'function openAttachmentPreview', 'URL.createObjectURL(blob)', 'data-preview-attachment', 'class="attachment-pdf"', 'class="attachment-image"']) {
   if (!app.includes(feature)) throw new Error(`Missing attachment display or preview workflow: ${feature}`);
 }
-if (!app.includes("if(b.dataset.open){openPatient(b.dataset.open);return;}")) throw new Error('Referral row action is not wired to its detail dialog');
+if (!app.includes("if(b.dataset.open){if(b.closest('#calendar-day-dialog'))closeDialog('calendar-day-dialog');openPatient(b.dataset.open);return;}")) throw new Error('Referral row action is not wired to its detail dialog');
+for (const feature of ['function calendarBookings', 'function calendarBand', 'function renderCalendar', 'function calendarDayHTML', 'function openCalendarSettings', 'localStorage.setItem(calendarSettingsKey()']) {
+  if (!app.includes(feature)) throw new Error(`Missing calendar workflow: ${feature}`);
+}
 if (!app.includes("validName=/^(ДЕМО-|DEMO-)/i.test(name)")) throw new Error('Synthetic attachment filename guard is missing');
 if ((operationCatalog.match(/^\s+"/gm) || []).length !== 67) throw new Error('Expected all 67 operation names from the supplied HTML');
 const css = readFileSync(path.join(root, 'dist/style.css'), 'utf8');
-for (const rule of ['.login-dialog label{display:grid', '.form-dialog:not(.login-dialog){width:min(1120px', '.form-dialog:not(.login-dialog) .form-grid{grid-template-columns:repeat(4', '.form-dialog:not(.login-dialog) .checkbox-label input[type=checkbox]{flex:0 0 18px;width:18px', '.brand-symbol svg', '.attachment-list']) {
+for (const rule of ['.login-dialog label{display:grid', '.form-dialog:not(.login-dialog){width:min(1120px', '.form-dialog:not(.login-dialog) .form-grid{grid-template-columns:repeat(4', '.form-dialog:not(.login-dialog) .checkbox-label input[type=checkbox]{flex:0 0 18px;width:18px', '.brand-symbol svg', '.attachment-list', '.calendar-grid{display:grid;grid-template-columns:repeat(7', '.calendar-day.status-orange', '.calendar-day.status-red']) {
   if (!css.includes(rule)) throw new Error(`Missing popup layout fix: ${rule}`);
 }
 if (!existsSync(path.join(root, 'database/pilot-schema.sql'))) throw new Error('Missing PostgreSQL pilot schema');
+if (!readFileSync(path.join(root, 'database/pilot-schema.sql'), 'utf8').includes('demo_calendar_color_rules')) throw new Error('Missing per-organization calendar color rules schema');
 for (const file of ['README.md', 'ARCHITECTURE.md', 'UC_CHECKLIST.md']) {
   if (!existsSync(path.join(root, file))) throw new Error(`Missing project guide ${file}`);
 }

@@ -75,6 +75,17 @@ CREATE TABLE demo_attachments (
   created_at timestamptz NOT NULL DEFAULT now()
 );
 
+-- Только визуальные пороги календаря организации; они не резервируют места.
+CREATE TABLE demo_calendar_color_rules (
+  organization_id uuid PRIMARY KEY REFERENCES demo_organizations(id) ON DELETE CASCADE,
+  green_max_admissions smallint NOT NULL DEFAULT 2 CHECK (green_max_admissions >= 0),
+  orange_max_admissions smallint NOT NULL DEFAULT 4 CHECK (orange_max_admissions > green_max_admissions),
+  updated_by uuid REFERENCES demo_users(id),
+  updated_at timestamptz NOT NULL DEFAULT now()
+);
+
+COMMENT ON TABLE demo_calendar_color_rules IS 'Демо-пороги цветовой индикации по числу согласованных госпитализаций за день; не управляют фактической вместимостью.';
+
 CREATE TABLE demo_events (
   id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   referral_id uuid REFERENCES demo_referrals(id),
